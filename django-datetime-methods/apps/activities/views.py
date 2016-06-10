@@ -1,5 +1,3 @@
-
-from django.views.generic import ListView
 from django.shortcuts import render
 from django.db.models import F, ExpressionWrapper, fields
 from django.db.models import CharField, Case, Value, When
@@ -54,32 +52,3 @@ def activity_casewhen(request):
     return render(request, 'activities/activity_casewhen.html', {
         'object_list': objects
     })
-
-
-# class ExpressionListView(ListView):
-#     model = Activity
-#     template_name_suffix = '_expression'
-
-#     def get_queryset(self):
-#         qs = super(ExpressionListView, self).get_queryset()
-#         overdue = ExpressionWrapper(timezone.now() - F('due_date'), output_field=fields.DurationField())
-#         return qs.annotate(overdue=overdue)
-
-
-# class CaseWhenListView(ListView):
-#     model = Activity
-#     template_name_suffix = '_casewhen'
-
-#     def get_queryset(self):
-#         qs = super(CaseWhenListView, self).get_queryset()
-#         green_date = timezone.now() - timedelta(days=25)
-#         yellow_date = timezone.now() - timedelta(days=50)
-#         # probably don't need this
-#         red_date = timezone.now() - timedelta(days=75)
-#         return qs.annotate(
-#             overdue=Case(
-#                 When(due_date__lte=green_date, then=Value('GREEN')),
-#                 When(due_date__lte=yellow_date, then=Value('YELLOW')),
-#                 When(due_date__lte=red_date, then=Value('RED')),
-#                 default=Value('RED'),
-#             output_field=CharField(),))
